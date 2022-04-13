@@ -1,13 +1,12 @@
 import * as Api from './src/OmdbApi.js'
 
-const movieList = await Api.getMovieList(1);
+const movieList = await Api.getMovieListFromTmdb(1);
 
-const movieTitleList = await Api.getMovieTitleListFromTmdb(movieList);
-
-console.log(Api.getMovieDetailedListFromOmdb(movieTitleList))
+const movieTitleList = await Api.getMoviesTitlesFromTmdbList(movieList);
 
 const promises = Api.getMovieDetailedListFromOmdb(movieTitleList)
 
+// Sauvegarde des détails des films dans un tableau après résolution de chaque promesse
 const movies = [];
 for(let promise of promises){
     const movie = await promise;
@@ -16,27 +15,5 @@ for(let promise of promises){
 }
 console.log(movies);
 
-// console.log(movieTitleList)
-
-// let autoComplete = movieList.items.map((movie) => {
-//     return {
-//         Tmdb_Id: movie.id,
-//         title: movie.title
-//     };
-// })
-// console.log(Api.getMovieTitleList(movieList))
-
-// function searchMovieByTitle(title = '') {
-//     return searchMovieByTitleFromOmdb(title)
-// }
-
-// console.log(await searchMovieByTitle('The Matrix'))
-
-// .then(movies => movies.filter(m => m.type === "test"))
-// const titleList = Api.getMovieTitleList(movieList);
-// console.log(titleList);
-
-
-
-
+// Méthode alternative avec Promise.all
 // const movies = await Promise.all(promises);
