@@ -1,24 +1,17 @@
 import * as Api from './utils.js'
 import * as fs from 'fs';
 
+// Fetch de la liste de films sur Tmdb
 const basicMovieList = await Api.getMovieListFromTmdb(1);
 
+// Extraction des titres
 const titleList = await Api.getMoviesTitlesFromTmdbList(basicMovieList);
 
-
+// Fetch de liste des détails de chaque film sur Omdb
 const promisesDetailedMovieList = Api.getMovieDetailedListFromOmdb(titleList)
 
-
 // Sauvegarde des détails des films dans un tableau après résolution de chaque promesse
-// Méthode alternative avec Promise.all
-// const movies = await Promise.all(promises);
-const moviesFinalList = [];
-for (let promise of promisesDetailedMovieList) {
-    const movie = await promise;
-    // Certains films ne sont pas trouvés dans la seconde base, on enregistre donc que les réponses positives
-    if (movie.Response == 'True') {
-        moviesFinalList.push(movie);
-    }
-}
+const moviesFinalList = await Api.getPromiseList(promisesDetailedMovieList);
 
+// Enregistrement de la liste dans un fichier texte
 fs.writeFileSync('./src/localAPIModel.txt', JSON.stringify(moviesFinalList))

@@ -3,6 +3,7 @@ import {
     timeConvert
 } from './src/utils.js';
 
+// Lecture et parsing en JSON du fichier texte
 const movieList = JSON.parse(fs.readFileSync('./src/localAPIModel.txt'))
 
 // Test de récup. et affichage de données du fichier
@@ -21,5 +22,4 @@ console.log(movieList.map(
             type: movie.Type
         }
     }
-
 ))
