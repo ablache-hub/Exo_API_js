@@ -6,17 +6,6 @@ export function getBasicMovieList(listNumber = '') {
         .then(res => res.json())
 }
 
-// Extraction des titres
-// export function getMoviesTitlesFromTmdbList(movieList = []) {
-//     let list = movieList.items.map((movie) => {
-//         return {
-//             Tmdb_Id: movie.id,
-//             title: movie.title
-//         };
-//     })
-//     return list
-// }
-
 // Fetch de liste des détails de chaque film sur Tmdb
 export function getDetailedMovieList(movieList = []) {
     return movieList.items.map(async (movie) => {
