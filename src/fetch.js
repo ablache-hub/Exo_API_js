@@ -1,4 +1,4 @@
-import * as Api from './OmdbApi.js'
+import * as Api from './utils.js'
 import * as fs from 'fs';
 
 const basicMovieList = await Api.getBasicMovieList(1);
