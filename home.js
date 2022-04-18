@@ -1,19 +1,22 @@
 import * as Api from './src/OmdbApi.js'
+import * as fs from 'fs';
 
-const movieList = await Api.getMovieListFromTmdb(1);
+const basicMovieList = await Api.getBasicMovieList(1);
 
-const movieTitleList = await Api.getMoviesTitlesFromTmdbList(movieList);
+// const movieTitleList = await Api.getMoviesTitlesFromTmdbList(movieList);
 
-const promises = Api.getMovieDetailedListFromOmdb(movieTitleList)
+const promisesDetailedMovieList = Api.getDetailedMovieList(basicMovieList)
 
 // Sauvegarde des détails des films dans un tableau après résolution de chaque promesse
-const movies = [];
-for(let promise of promises){
+const moviesFinalList = [];
+for(let promise of promisesDetailedMovieList){
     const movie = await promise;
     console.log(movie);
-    movies.push(movie);
+    moviesFinalList.push(movie);
 }
-console.log(movies);
+
+fs.writeFileSync('localAPIModel.txt', JSON.stringify(moviesFinalList))
+// console.log(moviesFinalList);
 
 // Méthode alternative avec Promise.all
 // const movies = await Promise.all(promises);
